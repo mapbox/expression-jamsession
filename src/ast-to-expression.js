@@ -28,7 +28,11 @@ function astToExpression(input) {
     });
   }
 
-  return [expressionOperator].concat(expressionArguments);
+  if (!expressionOperator || expressionArguments === []) {
+    return null;
+  } else {
+    return [expressionOperator].concat(expressionArguments);
+  }
 }
 
 export default astToExpression;
