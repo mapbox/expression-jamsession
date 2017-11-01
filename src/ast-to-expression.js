@@ -9,6 +9,10 @@ function astToExpression(input) {
     expressionOperator = input.operator;
   }
 
+  if (input.type === 'UnaryExpression') {
+    expressionArguments.push(astToExpression(input.argument));
+  }
+
   if (input.type === 'BinaryExpression') {
     expressionArguments.push(
       astToExpression(input.left),
