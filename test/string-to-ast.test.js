@@ -20,4 +20,36 @@ describe('stringToAst', () => {
 
     expect(actual).toEqual(output);
   });
+
+  test('3 +', () => {
+    const actual = () => {
+      stringToAst('3 +');
+    };
+    expect(actual).toThrow('Syntax error');
+
+    expect.hasAssertions();
+    try {
+      stringToAst('3 +');
+    } catch (error) {
+      expect(error.type).toBe('SyntaxError');
+      expect(error.index).toBe(3);
+      expect(error.description).toBe('Expected value after +');
+    }
+  });
+
+  test('e.', () => {
+    const actual = () => {
+      stringToAst('e.');
+    };
+    expect(actual).toThrow('Syntax error');
+
+    expect.hasAssertions();
+    try {
+      stringToAst('e.');
+    } catch (error) {
+      expect(error.type).toBe('SyntaxError');
+      expect(error.index).toBe(2);
+      expect(error.description).toBe('Unexpected input ');
+    }
+  });
 });
