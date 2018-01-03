@@ -4,12 +4,12 @@ function handleSyntaxErrors(error) {
   newError.index = error.index;
   newError.description = error.description;
 
-  if (newError.description.indexOf('expression') !== -1) {
+  if (/expression/.test(newError.description)) {
     newError.description = newError.description.replace('expression', 'value');
   }
 
   if (newError.description === 'Unexpected ') {
-    newError.description = 'Unexpected input ';
+    newError.description = 'Unexpected input';
   }
 
   return newError;
