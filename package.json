@@ -55,7 +55,7 @@
     "url": "git+https://github.com/mapbox/expression-jamsession.git"
   },
   "author": "Mapbox",
-  "license": "UNLICENSED",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/mapbox/expression-jamsession/issues"
   },
