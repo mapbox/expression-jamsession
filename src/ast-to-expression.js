@@ -1,12 +1,12 @@
 function astToExpression(input) {
-  if (input.value) return input.value;
-  if (input.name) return input.name;
+  if (input.value !== undefined) return input.value;
+  if (input.name !== undefined) return input.name;
 
   let expressionOperator;
   let expressionArguments = [];
 
   if (input.operator) {
-    expressionOperator = input.operator;
+    expressionOperator = input.operator === '&' ? 'concat' : input.operator;
   }
 
   if (input.type === 'UnaryExpression') {
@@ -14,10 +14,21 @@ function astToExpression(input) {
   }
 
   if (input.type === 'BinaryExpression') {
-    expressionArguments.push(
-      astToExpression(input.left),
-      astToExpression(input.right)
-    );
+    // Collapse concat arguments, in case the & operator was used to join
+    // more than two successive strings.
+    const addBinaryArgument = arg => {
+      if (
+        expressionOperator === 'concat' &&
+        Array.isArray(arg) &&
+        arg[0] === 'concat'
+      ) {
+        expressionArguments = expressionArguments.concat(arg.slice(1));
+      } else {
+        expressionArguments.push(arg);
+      }
+    };
+    addBinaryArgument(astToExpression(input.left));
+    addBinaryArgument(astToExpression(input.right));
   }
 
   if (input.type === 'CallExpression') {
