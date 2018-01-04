@@ -1,4 +1,4 @@
-# expression-jamsession
+# @mapbox/expression-jamsession
 
 [![Build Status](https://travis-ci.com/mapbox/expression-jamsession.svg?token=SEyDg5xudiyx521kB7Cy&branch=master)](https://travis-ci.com/mapbox/expression-jamsession)
 
