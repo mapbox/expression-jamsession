@@ -29,90 +29,57 @@ describe('literals', () => {
 
 describe('formulas', () => {
   test('-3', () => {
-    const actual = glExpressionShorthand('-3', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('-3');
     expect(actual).toEqual(['-', 3]);
   });
 
   test('-(3 + 4)', () => {
-    const actual = glExpressionShorthand('-(3 + 4)', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('-(3 + 4)');
     expect(actual).toEqual(['-', ['+', 3, 4]]);
   });
 
   test('3 + 4', () => {
-    const actual = glExpressionShorthand('3 + 4', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('3 + 4');
     expect(actual).toEqual(['+', 3, 4]);
   });
 
   test('(3 + 4) / 7', () => {
-    const actual = glExpressionShorthand('(3 + 4) / 7', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('(3 + 4) / 7');
     expect(actual).toEqual(['/', ['+', 3, 4], 7]);
   });
 
   test('((3 + 4) * 2) / 7', () => {
-    const actual = glExpressionShorthand('((3 + 4) * 2) / 7', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('((3 + 4) * 2) / 7');
     expect(actual).toEqual(['/', ['*', ['+', 3, 4], 2], 7]);
   });
 
   test('log2(3)', () => {
-    const actual = glExpressionShorthand('log2(3)', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('log2(3)');
     expect(actual).toEqual(['log2', 3]);
   });
 
   test('log2((3 + 4) / 7)', () => {
-    const actual = glExpressionShorthand('log2((3 + 4) / 7)', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('log2((3 + 4) / 7)');
     expect(actual).toEqual(['log2', ['/', ['+', 3, 4], 7]]);
   });
 
   test('min(2, 4, 6)', () => {
-    const actual = glExpressionShorthand('min(2, 4, 6)', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('min(2, 4, 6)');
     expect(actual).toEqual(['min', 2, 4, 6]);
   });
 
   test('max(2, 4, 6)', () => {
-    const actual = glExpressionShorthand('max(2, 4, 6)', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('max(2, 4, 6)');
     expect(actual).toEqual(['max', 2, 4, 6]);
   });
 
   test('max(2, 4, ((3 + 4) / 7))', () => {
-    const actual = glExpressionShorthand('max(2, 4, ((3 + 4) / 7))', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('max(2, 4, ((3 + 4) / 7))');
     expect(actual).toEqual(['max', 2, 4, ['/', ['+', 3, 4], 7]]);
   });
 
   test('max(3, log2(6))', () => {
-    const actual = glExpressionShorthand('max(3, log2(6))', {
-      baseType: 'number',
-      inputMode: 'formula'
-    });
+    const actual = glExpressionShorthand('max(3, log2(6))');
     expect(actual).toEqual(['max', 3, ['log2', 6]]);
   });
 
