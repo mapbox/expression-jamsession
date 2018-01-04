@@ -1,7 +1,7 @@
 {
-  "name": "@mapbox/expressions-transformer",
+  "name": "@mapbox/expression-jamsession",
   "version": "0.1.0",
-  "description": "",
+  "description": "Write Mapbox GL expressions in a more familiar, handwritable, spreadsheet-like, programming-like syntax.",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -52,14 +52,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mapbox/expressions-transformer.git"
+    "url": "git+https://github.com/mapbox/expression-jamsession.git"
   },
   "author": "Mapbox",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/mapbox/expressions-transformer/issues"
+    "url": "https://github.com/mapbox/expression-jamsession/issues"
   },
-  "homepage": "https://github.com/mapbox/expressions-transformer#readme",
+  "homepage": "https://github.com/mapbox/expression-jamsession#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
