@@ -41,13 +41,13 @@
   "homepage": "https://github.com/mapbox/expressions-transformer#readme",
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
-    "eslint": "^4.9.0",
+    "eslint": "^4.14.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lint-staged": "^4.3.0",
-    "prettier": "^1.7.4"
+    "jest": "^22.0.4",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2"
   },
   "dependencies": {
-    "jsep": "^0.3.2"
+    "jsep": "^0.3.3"
   }
 }
