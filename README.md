@@ -5,6 +5,7 @@
 Write [Mapbox GL expressions](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions) in a more familiar, handwritable, spreadsheet-like, programming-like syntax.
 This library translates these handwritten formulas into valid spec-compliant Mapbox GL expressions that you can use in a Mapbox style.
 
+
 ## Features
 
 - Arithmetic operators (`+ - * /`) and parentheses work like in high school math, e.g. `((3 + 4) * 2) / 7`.
@@ -46,3 +47,13 @@ max(3, log2(6))
 ## Caveats
 
 - You can use this library to create expressions that are syntactically acceptable but invalid as Mapbox GL expressions, e.g. `notARealExpression(true)` outputs `["notARealExpression", true]`.
+
+## Usage
+
+Pass in a string formula and get an expression.
+
+```js
+import createExpression from '@mapbox/expression-jamsession';
+
+createExpression('3 + 4'); // ["+", 3, 4]
+```

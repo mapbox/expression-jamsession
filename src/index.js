@@ -2,7 +2,7 @@ import jsep from 'jsep';
 import handleSyntaxErrors from './handle-syntax-errors';
 import astToExpression from './ast-to-expression';
 
-function glExpressionShorthand(input) {
+function createExpression(input) {
   let ast;
   try {
     ast = jsep(input);
@@ -14,4 +14,4 @@ function glExpressionShorthand(input) {
   return expression;
 }
 
-export default glExpressionShorthand;
+export default createExpression;
