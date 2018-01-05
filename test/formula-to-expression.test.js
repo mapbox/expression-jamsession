@@ -108,6 +108,31 @@ describe('formulas', () => {
       ['upper', ['concat', 'here ', 'not there']]
     ]);
   });
+
+  test('3 % 2', () => {
+    const actual = formulaToExpression('3 % 2');
+    expect(actual).toEqual(['%', 3, 2]);
+  });
+
+  test('(3 + 2) % 2', () => {
+    const actual = formulaToExpression('(3 + 2) % 2');
+    expect(actual).toEqual(['%', ['+', 3, 2], 2]);
+  });
+
+  test('3^2', () => {
+    const actual = formulaToExpression('3^2');
+    expect(actual).toEqual(['^', 3, 2]);
+  });
+
+  test('3^2 + 1', () => {
+    const actual = formulaToExpression('3^2 + 1');
+    expect(actual).toEqual(['+', ['^', 3, 2], 1]);
+  });
+
+  test('3^(2 + 1)', () => {
+    const actual = formulaToExpression('3^(2 + 1)');
+    expect(actual).toEqual(['^', 3, ['+', 2, 1]]);
+  });
 });
 
 describe('syntax errors', () => {

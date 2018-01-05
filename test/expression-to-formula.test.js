@@ -58,4 +58,29 @@ describe('literals', () => {
       `"there are " & get("population") & " people " & upper("here " & "not there")`
     );
   });
+
+  test('3 % 2', () => {
+    const actual = expressionToFormula(['%', 3, 2]);
+    expect(actual).toBe('3 % 2');
+  });
+
+  test('(3 + 2) % 2', () => {
+    const actual = expressionToFormula(['%', ['+', 3, 2], 2]);
+    expect(actual).toBe('(3 + 2) % 2');
+  });
+
+  test('3^2', () => {
+    const actual = expressionToFormula(['^', 3, 2]);
+    expect(actual).toBe('3^2');
+  });
+
+  test('3^2 + 3', () => {
+    const actual = expressionToFormula(['+', ['^', 3, 2], 1]);
+    expect(actual).toBe('3^2 + 1');
+  });
+
+  test('3^(2 + 1)', () => {
+    const actual = expressionToFormula(['^', 3, ['+', 2, 1]]);
+    expect(actual).toBe('3^(2 + 1)');
+  });
 });
