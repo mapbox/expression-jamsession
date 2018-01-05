@@ -91,3 +91,8 @@ test('to-number(get("miles")) & " miles"', () => {
   ]);
   expect(actual).toBe('to-number(get("miles")) & " miles"');
 });
+
+test('3 * length(get("len"))', () => {
+  const actual = expressionToFormula(['*', 3, ['length', ['get', 'len']]]);
+  expect(actual).toBe('3 * length(get("len"))');
+});
