@@ -147,6 +147,11 @@ describe('formulas', () => {
       ' miles'
     ]);
   });
+
+  test('3 * length(get("len"))', () => {
+    const actual = formulaToExpression('3 * length(get("len"))');
+    expect(actual).toEqual(['*', 3, ['length', ['get', 'len']]]);
+  });
 });
 
 describe('syntax errors', () => {
