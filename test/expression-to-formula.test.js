@@ -82,3 +82,12 @@ test('3^(2 + 1)', () => {
   const actual = expressionToFormula(['^', 3, ['+', 2, 1]]);
   expect(actual).toBe('3^(2 + 1)');
 });
+
+test('to-number(get("miles")) & " miles"', () => {
+  const actual = expressionToFormula([
+    'concat',
+    ['to-number', ['get', 'miles']],
+    ' miles'
+  ]);
+  expect(actual).toBe('to-number(get("miles")) & " miles"');
+});

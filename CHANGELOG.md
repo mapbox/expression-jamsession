@@ -4,6 +4,7 @@
 
 - Fix handling of `^` (exponentiation) and `%` (remainder) expression operators.
 - Fix handling of empty input to `formulaToExpression`. It now returns `undefined`.
+- Fix handling of hyphenated expression operators.
 
 ## 0.2.0
 
