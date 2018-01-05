@@ -6,7 +6,7 @@ Write [Mapbox GL expressions](https://www.mapbox.com/mapbox-gl-js/style-spec/#ex
 This library translates these handwritten formulas into valid spec-compliant Mapbox GL expressions that you can use in a Mapbox style.
 
 
-## Features
+## Formula syntax features
 
 - Arithmetic operators (`+ - * /`) and parentheses work like in high school math, e.g. `((3 + 4) * 2) / 7`.
 - Expressions are represented like function invocations in programming, e.g. `get("population")`, `log2(get("population"))`.
@@ -44,16 +44,21 @@ max(3, log2(6))
 ["concat", ["name ", ["get", "name"]]]
 ```
 
+## Usage
+
+The module exports two functions so you can transform in both directions:
+
+- `formulaToExpression` transforms (string) formulas to (array) expressions.
+- `expressionToFormula` transforms expressions to formulas.
+
+```js
+import jamsession from '@mapbox/expression-jamsession';
+
+jamsession.formulaToExpression("3 + 4"); // ["+", 3, 4]
+
+jamsession.expressionToFormula(["+", 3, 4]); // "3 + 4"
+```
+
 ## Caveats
 
 - You can use this library to create expressions that are syntactically acceptable but invalid as Mapbox GL expressions, e.g. `notARealExpression(true)` outputs `["notARealExpression", true]`.
-
-## Usage
-
-Pass in a string formula and get an expression.
-
-```js
-import createExpression from '@mapbox/expression-jamsession';
-
-createExpression('3 + 4'); // ["+", 3, 4]
-```

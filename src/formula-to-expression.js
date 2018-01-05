@@ -1,3 +1,6 @@
+import jsep from 'jsep';
+import handleSyntaxErrors from './handle-syntax-errors';
+
 function astToExpression(input) {
   if (input.value !== undefined) return input.value;
   if (input.name !== undefined) return input.name;
@@ -42,4 +45,16 @@ function astToExpression(input) {
   return [expressionOperator].concat(expressionArguments);
 }
 
-export default astToExpression;
+function formulaToExpression(input) {
+  let ast;
+  try {
+    ast = jsep(input);
+  } catch (syntaxError) {
+    throw handleSyntaxErrors(syntaxError);
+  }
+
+  const expression = astToExpression(ast);
+  return expression;
+}
+
+export default formulaToExpression;
