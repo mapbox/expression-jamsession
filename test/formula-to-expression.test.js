@@ -1,5 +1,10 @@
 import formulaToExpression from '../src/formula-to-expression';
 
+test('empty input', () => {
+  expect(formulaToExpression()).toBeUndefined();
+  expect(formulaToExpression('')).toBeUndefined();
+});
+
 describe('literals', () => {
   test('7', () => {
     const actual = formulaToExpression('7');

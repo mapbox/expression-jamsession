@@ -1,4 +1,8 @@
 export default function expressionToFormula(expression) {
+  if (!Array.isArray(expression)) {
+    throw new Error('input must be an array');
+  }
+
   const operator = expression[0];
 
   const args = expression.slice(1).map(arg => {

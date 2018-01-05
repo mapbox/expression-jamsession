@@ -55,6 +55,14 @@ function astToExpression(input) {
 }
 
 function formulaToExpression(input) {
+  if (input === '' || input === undefined) {
+    return;
+  }
+
+  if (typeof input !== 'string') {
+    throw new Error('input must be a string');
+  }
+
   let ast;
   try {
     ast = jsep(input);
