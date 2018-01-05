@@ -138,6 +138,15 @@ describe('formulas', () => {
     const actual = formulaToExpression('3^(2 + 1)');
     expect(actual).toEqual(['^', 3, ['+', 2, 1]]);
   });
+
+  test('to-number(get("miles")) & " miles"', () => {
+    const actual = formulaToExpression('to-number(get("miles")) & " miles"');
+    expect(actual).toEqual([
+      'concat',
+      ['to-number', ['get', 'miles']],
+      ' miles'
+    ]);
+  });
 });
 
 describe('syntax errors', () => {

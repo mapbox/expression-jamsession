@@ -12,20 +12,14 @@ function astToExpression(input) {
   let expressionOperator;
   let expressionArguments = [];
 
-  if (input.operator) {
-    expressionOperator = input.operator;
-  }
-
-  // Transform shorthand operator for concat.
-  if (expressionOperator === '&') {
-    expressionOperator = 'concat';
-  }
-
   if (input.type === 'UnaryExpression') {
+    expressionOperator = input.operator;
     expressionArguments.push(astToExpression(input.argument));
   }
 
   if (input.type === 'BinaryExpression') {
+    expressionOperator = input.operator === '&' ? 'concat' : input.operator;
+
     // Collapse concat arguments, in case the & operator was used to join
     // more than two successive strings.
     const addBinaryArgument = arg => {
@@ -51,6 +45,15 @@ function astToExpression(input) {
     });
   }
 
+  // Change undescores in expression operators to hyphens, reversing the
+  // transformation below.
+  if (/[a-z]+_[a-z]+/.test(expressionOperator)) {
+    expressionOperator = expressionOperator.replace(
+      /([a-z]+)_([a-z]+)/,
+      '$1-$2'
+    );
+  }
+
   return [expressionOperator].concat(expressionArguments);
 }
 
@@ -62,6 +65,10 @@ function formulaToExpression(input) {
   if (typeof input !== 'string') {
     throw new Error('input must be a string');
   }
+
+  // Change hyphens in expression operators to underscores. This allows JS
+  // parsing to work, but then needs to be reversed above.
+  input = input.replace(/([a-z]+)-([a-z]+)\(/, '$1_$2(');
 
   let ast;
   try {
