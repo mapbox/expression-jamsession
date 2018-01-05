@@ -10,17 +10,26 @@ export default function expressionToFormula(expression) {
     }
     const argOperator = arg[0];
     const argFormula = expressionToFormula(arg);
-    if (/^[+-]$/.test(argOperator) && /^[*/]$/.test(operator)) {
+    if (
+      // Use parentheses to deal with operator precedence.
+      (/^[+-]$/.test(argOperator) && /^[*/%]$/.test(operator)) ||
+      operator === '^'
+    ) {
       return `(${argFormula})`;
     }
     return argFormula;
   });
 
+  if (operator === '^') {
+    return `${args.join(operator)}`;
+  }
+
   if (
     operator === '+' ||
     operator === '*' ||
     operator === '-' ||
-    operator === '/'
+    operator === '/' ||
+    operator === '%'
   ) {
     return `${args.join(` ${operator} `)}`;
   }

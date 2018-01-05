@@ -1,6 +1,10 @@
 import jsep from 'jsep';
 import handleSyntaxErrors from './handle-syntax-errors';
 
+// GL expressions use ^ for exponentiation, while JS uses **.
+// 15 is precedence of ** operator in JS.
+jsep.addBinaryOp('^', 15);
+
 function astToExpression(input) {
   if (input.value !== undefined) return input.value;
   if (input.name !== undefined) return input.name;
@@ -9,7 +13,12 @@ function astToExpression(input) {
   let expressionArguments = [];
 
   if (input.operator) {
-    expressionOperator = input.operator === '&' ? 'concat' : input.operator;
+    expressionOperator = input.operator;
+  }
+
+  // Transform shorthand operator for concat.
+  if (expressionOperator === '&') {
+    expressionOperator = 'concat';
   }
 
   if (input.type === 'UnaryExpression') {
