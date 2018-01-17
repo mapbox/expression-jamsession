@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 0.3.0
 
 - Fix handling of `^` (exponentiation) and `%` (remainder) expression operators.
 - Fix handling of empty input to `formulaToExpression`. It now returns `undefined`.
