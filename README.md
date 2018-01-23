@@ -8,8 +8,11 @@ This library translates these handwritten formulas into valid spec-compliant Map
 
 ## Formula syntax features
 
-- Arithmetic operators (`+ - * /`) and parentheses work like in high school math, e.g. `((3 + 4) * 2) / 7`.
-- Expressions are represented like function invocations in programming, e.g. `get("population")`, `log2(get("population"))`.
+- Most expressions are represented like function invocations in programming, e.g. `get("population")`, `log2(get("population"))`.
+- Symbolic math operators (`+ - * / %`) and parentheses work like in high school math, e.g. `((3 + 4) * 2) / 7`.
+  That is, the formula should contain `3 + 4` instead of `+(3, 4)`.
+- Symbolic decision operators also work with operands on both sides, instead of like function invocations.
+  So `get("foo") != 4` instead of `!=(get("foo"), 4)`.
 - `&` operator concatenates strings, as in spreadsheet programs.
 
 ```js

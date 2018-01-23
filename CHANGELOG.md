@@ -1,5 +1,9 @@
 # Changelog
 
+## Head
+
+- Fix handling of symbolic decision operators, like `<=` and `!`.
+
 ## 0.3.1
 
 - Fix handling of the `literal` expression, whose argument can be an array whose items are primitives and arrays of primitives.

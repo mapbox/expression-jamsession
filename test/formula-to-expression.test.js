@@ -187,6 +187,25 @@ describe('formulas', () => {
       );
     }
   });
+
+  test('3 != 4', () => {
+    const actual = formulaToExpression('3 != 4');
+    expect(actual).toEqual(['!=', 3, 4]);
+  });
+
+  test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
+    const actual = formulaToExpression(
+      'case(get("foo") <= 4, 6, 2 == 2, 3, 1)'
+    );
+    expect(actual).toEqual([
+      'case',
+      ['<=', ['get', 'foo'], 4],
+      6,
+      ['==', 2, 2],
+      3,
+      1
+    ]);
+  });
 });
 
 describe('syntax errors', () => {
