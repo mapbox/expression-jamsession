@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+- Fix handling of the `literal` expression, whose argument can be an array whose items are primitives and arrays of primitives.
+
 ## 0.3.0
 
 - Fix handling of `^` (exponentiation) and `%` (remainder) expression operators.

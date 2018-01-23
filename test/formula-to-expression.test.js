@@ -152,6 +152,41 @@ describe('formulas', () => {
     const actual = formulaToExpression('3 * length(get("len"))');
     expect(actual).toEqual(['*', 3, ['length', ['get', 'len']]]);
   });
+
+  test('literal([1, 2])', () => {
+    const actual = formulaToExpression('literal([1, 2])');
+    expect(actual).toEqual(['literal', [1, 2]]);
+  });
+
+  test('literal([1, [2, 3]])', () => {
+    const actual = formulaToExpression('literal([1, [2, 3]])');
+    expect(actual).toEqual(['literal', [1, [2, 3]]]);
+  });
+
+  test('literal(["foo", "bar"])', () => {
+    const actual = formulaToExpression('literal(["foo", "bar"])');
+    expect(actual).toEqual(['literal', ['foo', 'bar']]);
+  });
+
+  test('coalesce(literal(["foo", ["bar", "baz"]]))', () => {
+    const actual = formulaToExpression(
+      'coalesce(literal(["foo", ["bar", "baz"]]))'
+    );
+    expect(actual).toEqual(['coalesce', ['literal', ['foo', ['bar', 'baz']]]]);
+  });
+
+  test('literal({ foo: 1, bar: 2 })', () => {
+    expect.hasAssertions();
+    try {
+      formulaToExpression('literal({ foo: 1, bar: 2 })');
+    } catch (error) {
+      expect(error.type).toBe('SyntaxError');
+      expect(error.index).toBe(8);
+      expect(error.description).toBe(
+        'Only array arguments are supported for the literal expression'
+      );
+    }
+  });
 });
 
 describe('syntax errors', () => {

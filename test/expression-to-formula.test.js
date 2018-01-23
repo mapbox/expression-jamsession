@@ -96,3 +96,37 @@ test('3 * length(get("len"))', () => {
   const actual = expressionToFormula(['*', 3, ['length', ['get', 'len']]]);
   expect(actual).toBe('3 * length(get("len"))');
 });
+
+test('literal([1, 2])', () => {
+  const actual = expressionToFormula(['literal', [1, 2]]);
+  expect(actual).toBe('literal([1, 2])');
+});
+
+test('literal([1, [2, 3]])', () => {
+  const actual = expressionToFormula(['literal', [1, [2, 3]]]);
+  expect(actual).toBe('literal([1, [2, 3]])');
+});
+
+test('literal(["foo", "bar"])', () => {
+  const actual = expressionToFormula(['literal', ['foo', 'bar']]);
+  expect(actual).toBe('literal(["foo", "bar"])');
+});
+
+test('coalesce(literal(["foo", ["bar", "baz"]]))', () => {
+  const actual = expressionToFormula([
+    'coalesce',
+    ['literal', ['foo', ['bar', 'baz']]]
+  ]);
+  expect(actual).toBe('coalesce(literal(["foo", ["bar", "baz"]]))');
+});
+
+test('literal({ foo: 1, bar: 2 })', () => {
+  expect.hasAssertions();
+  try {
+    expressionToFormula(['literal', { foo: 1, bar: 2 }]);
+  } catch (error) {
+    expect(error.message).toBe(
+      'Only array arguments are supported for the literal expression'
+    );
+  }
+});
