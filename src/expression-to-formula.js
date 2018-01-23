@@ -1,9 +1,27 @@
+function stringifyLiteralArray(arr) {
+  const items = arr.map(item => {
+    if (Array.isArray(item)) return stringifyLiteralArray(item);
+    return JSON.stringify(item);
+  });
+  return `[${items.join(', ')}]`;
+}
+
 export default function expressionToFormula(expression) {
   if (!Array.isArray(expression)) {
-    throw new Error('input must be an array');
+    throw new Error('Input must be an array');
   }
 
   const operator = expression[0];
+
+  if (operator === 'literal') {
+    const arg = expression[1];
+    if (!Array.isArray(arg)) {
+      throw new Error(
+        'Only array arguments are supported for the literal expression'
+      );
+    }
+    return `${operator}(${stringifyLiteralArray(arg)})`;
+  }
 
   const args = expression.slice(1).map(arg => {
     if (typeof arg === 'string') {

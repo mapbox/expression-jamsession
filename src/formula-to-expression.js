@@ -5,6 +5,18 @@ import handleSyntaxErrors from './handle-syntax-errors';
 // 15 is precedence of ** operator in JS.
 jsep.addBinaryOp('^', 15);
 
+function handleLiteralArgument(arg) {
+  switch (arg.type) {
+    case 'ArrayExpression':
+      return arg.elements.map(item => {
+        if (item.type === 'Literal') return item.value;
+        return handleLiteralArgument(item);
+      });
+    default:
+      throw new Error('Invalid syntax');
+  }
+}
+
 function astToExpression(input) {
   if (input.value !== undefined) return input.value;
   if (input.name !== undefined) return input.name;
@@ -40,9 +52,15 @@ function astToExpression(input) {
   if (input.type === 'CallExpression') {
     expressionOperator = input.callee.name;
 
-    input.arguments.forEach(i => {
-      expressionArguments.push(astToExpression(i));
-    });
+    if (expressionOperator === 'literal') {
+      expressionArguments = expressionArguments.concat(
+        input.arguments.map(handleLiteralArgument)
+      );
+    } else {
+      input.arguments.forEach(i => {
+        expressionArguments.push(astToExpression(i));
+      });
+    }
   }
 
   // Change undescores in expression operators to hyphens, reversing the
@@ -74,7 +92,7 @@ function formulaToExpression(input) {
   try {
     ast = jsep(input);
   } catch (syntaxError) {
-    throw handleSyntaxErrors(syntaxError);
+    throw handleSyntaxErrors(syntaxError, input);
   }
 
   const expression = astToExpression(ast);
