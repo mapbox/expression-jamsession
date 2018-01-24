@@ -130,3 +130,34 @@ test('literal({ foo: 1, bar: 2 })', () => {
     );
   }
 });
+
+test('3 != 4', () => {
+  const actual = expressionToFormula(['!=', 3, 4]);
+  expect(actual).toEqual('3 != 4');
+});
+
+test('3 * 4 + 1 != 4 - 3 / 2', () => {
+  const actual = expressionToFormula([
+    '!=',
+    ['+', ['*', 3, 4], 1],
+    ['-', 4, ['/', 3, 2]]
+  ]);
+  expect(actual).toBe('3 * 4 + 1 != 4 - 3 / 2');
+});
+
+test('(3 != 4) == true', () => {
+  const actual = expressionToFormula(['==', ['!=', 3, 4], true]);
+  expect(actual).toBe('3 != 4 == true');
+});
+
+test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
+  const actual = expressionToFormula([
+    'case',
+    ['<=', ['get', 'foo'], 4],
+    6,
+    ['==', 2, 2],
+    3,
+    1
+  ]);
+  expect(actual).toEqual('case(get("foo") <= 4, 6, 2 == 2, 3, 1)');
+});

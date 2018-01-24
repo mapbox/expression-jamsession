@@ -1,3 +1,7 @@
+// These operators are used between operands instead of like a function
+// name in a call expression, so 3 + 4 instead of +(3, 4).
+const symbolOperatorRegExp = /^(\+|\*|-|\/|%|!|!=|<|<=|==|>|>=)$/;
+
 function stringifyLiteralArray(arr) {
   const items = arr.map(item => {
     if (Array.isArray(item)) return stringifyLiteralArray(item);
@@ -46,13 +50,7 @@ export default function expressionToFormula(expression) {
     return `${args.join(operator)}`;
   }
 
-  if (
-    operator === '+' ||
-    operator === '*' ||
-    operator === '-' ||
-    operator === '/' ||
-    operator === '%'
-  ) {
+  if (symbolOperatorRegExp.test(operator)) {
     return `${args.join(` ${operator} `)}`;
   }
 
