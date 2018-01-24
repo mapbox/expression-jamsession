@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 0.3.2
 
 - Fix handling of symbolic decision operators, like `<=` and `!`.
 
