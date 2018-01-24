@@ -193,6 +193,20 @@ describe('formulas', () => {
     expect(actual).toEqual(['!=', 3, 4]);
   });
 
+  test('3 * 4 + 1 != 4 - 3 / 2', () => {
+    const actual = formulaToExpression('3 * 4 + 1 != 4 - 3 / 2');
+    expect(actual).toEqual([
+      '!=',
+      ['+', ['*', 3, 4], 1],
+      ['-', 4, ['/', 3, 2]]
+    ]);
+  });
+
+  test('(3 != 4) == true', () => {
+    const actual = formulaToExpression('(3 != 4) == true');
+    expect(actual).toEqual(['==', ['!=', 3, 4], true]);
+  });
+
   test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
     const actual = formulaToExpression(
       'case(get("foo") <= 4, 6, 2 == 2, 3, 1)'
