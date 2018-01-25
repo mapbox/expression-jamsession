@@ -66,5 +66,5 @@ jamsession.expressionToFormula(["+", 3, 4]); // "3 + 4"
 
 - You can use this library to create expressions that are syntactically acceptable but invalid as Mapbox GL expressions, e.g. `notARealExpression(true)` outputs `["notARealExpression", true]`.
 - You cannot use JSON object literal arguments to [the `literal` expression](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-types-literal).
-  Even though this is allowed in the spec, objects are not supported by jsep and the use case for this type of expression is enough of an edge case that it doesn't seem worth serious work.
+  This is allowed in the spec; but objects are not supported by jsep and the use case for this type of expression is kind of an edge case — so it's probably not worth trying to adjust the parser to support this edge case.
   If you disagree, please consider filing an issue and/or PR.
