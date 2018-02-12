@@ -13,6 +13,7 @@ This library translates these handwritten formulas into valid spec-compliant Map
   That is, the formula should contain `3 + 4` instead of `+(3, 4)`.
 - Symbolic decision operators also work with operands on both sides, instead of like function invocations.
   So `get("foo") != 4` instead of `!=(get("foo"), 4)`.
+- Strings must always be wrapped in quotation marks, e.g. `concat("egg", "s")` not `concat(egg, s)`.
 - `&` operator concatenates strings, as in spreadsheet programs.
 
 ```js

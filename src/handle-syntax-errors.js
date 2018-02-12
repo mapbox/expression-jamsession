@@ -1,8 +1,8 @@
-function handleSyntaxErrors(error, input) {
+function handleSyntaxErrors(error, input = '') {
   const newError = new Error('Syntax error');
   newError.type = 'SyntaxError';
   newError.index = error.index;
-  newError.description = error.description;
+  newError.description = error.description || error.message;
 
   if (/expression/.test(newError.description)) {
     newError.description = newError.description.replace('expression', 'value');

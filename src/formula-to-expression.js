@@ -13,11 +13,15 @@ function handleLiteralArgument(arg) {
         return handleLiteralArgument(item);
       });
     default:
-      throw new Error('Invalid syntax');
+      throw handleSyntaxErrors(new Error('Invalid syntax'));
   }
 }
 
 function astToExpression(input) {
+  if (input.type === 'Identifier') {
+    throw handleSyntaxErrors(new Error('Unexpected identifier'));
+  }
+
   if (input.value !== undefined) return input.value;
   if (input.name !== undefined) return input.name;
 

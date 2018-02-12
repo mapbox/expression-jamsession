@@ -1,5 +1,9 @@
 # Changelog
 
+## Head
+
+- **[BREAKING]** Reject unquoted literal strings as passed in as formulas to `formulaToExpression`.
+
 ## 0.3.2
 
 - Fix handling of symbolic decision operators, like `<=` and `!`.
