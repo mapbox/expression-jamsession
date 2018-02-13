@@ -1,6 +1,6 @@
 # Changelog
 
-## Head
+## 0.4.0
 
 - **[BREAKING]** Reject unquoted literal strings as passed in as formulas to `formulaToExpression`.
 
