@@ -16,7 +16,7 @@ describe('literals', () => {
     expect(actual).toBe(77.323);
   });
 
-  test('sing', () => {
+  test('"sing"', () => {
     const actual = formulaToExpression('"sing"');
     expect(actual).toBe('sing');
   });
@@ -56,6 +56,11 @@ describe('formulas', () => {
   test('((3 + 4) * 2) / 7', () => {
     const actual = formulaToExpression('((3 + 4) * 2) / 7');
     expect(actual).toEqual(['/', ['*', ['+', 3, 4], 2], 7]);
+  });
+
+  test('sing()', () => {
+    const actual = formulaToExpression('sing()');
+    expect(actual).toEqual(['sing']);
   });
 
   test('log2(3)', () => {
@@ -252,6 +257,38 @@ describe('syntax errors', () => {
       expect(error.type).toBe('SyntaxError');
       expect(error.index).toBe(2);
       expect(error.description).toBe('Unexpected input');
+    }
+  });
+
+  test('sing', () => {
+    const actual = () => {
+      formulaToExpression('sing');
+    };
+    expect(actual).toThrow('Syntax error');
+
+    expect.hasAssertions();
+    try {
+      formulaToExpression('sing');
+    } catch (error) {
+      expect(error.type).toBe('SyntaxError');
+      expect(error.index).toBe(undefined);
+      expect(error.description).toBe('Unexpected identifier');
+    }
+  });
+
+  test('concat(foo, bar)', () => {
+    const actual = () => {
+      formulaToExpression('concat(foo, bar)');
+    };
+    expect(actual).toThrow('Syntax error');
+
+    expect.hasAssertions();
+    try {
+      formulaToExpression('concat(foo, bar)');
+    } catch (error) {
+      expect(error.type).toBe('SyntaxError');
+      expect(error.index).toBe(undefined);
+      expect(error.description).toBe('Unexpected identifier');
     }
   });
 });
