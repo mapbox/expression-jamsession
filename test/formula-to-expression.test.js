@@ -212,6 +212,11 @@ describe('formulas', () => {
     expect(actual).toEqual(['==', ['!=', 3, 4], true]);
   });
 
+  test('!(get("x"))', () => {
+    const actual = formulaToExpression('!(get("x"))');
+    expect(actual).toEqual(['!', ['get', 'x']]);
+  });
+
   test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
     const actual = formulaToExpression(
       'case(get("foo") <= 4, 6, 2 == 2, 3, 1)'

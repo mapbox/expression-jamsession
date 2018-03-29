@@ -150,6 +150,11 @@ test('(3 != 4) == true', () => {
   expect(actual).toBe('3 != 4 == true');
 });
 
+test('!(get("x"))', () => {
+  const actual = expressionToFormula(['!', ['get', 'x']]);
+  expect(actual).toBe('!(get("x"))');
+});
+
 test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
   const actual = expressionToFormula([
     'case',

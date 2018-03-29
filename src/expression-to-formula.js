@@ -8,6 +8,11 @@ function stringifyLiteralArray(arr) {
   return `[${items.join(', ')}]`;
 }
 
+function isInfixOperator(operator) {
+  if (operator === '!') return false;
+  return /^[^a-zA-Z]/.test(operator);
+}
+
 export default function expressionToFormula(expression) {
   if (!Array.isArray(expression)) {
     throw new Error('Input must be an array');
@@ -52,7 +57,7 @@ export default function expressionToFormula(expression) {
     return `${args.join(operator)}`;
   }
 
-  if (/^[^a-zA-Z]/.test(operator)) {
+  if (isInfixOperator(operator)) {
     return `${args.join(` ${operator} `)}`;
   }
 
