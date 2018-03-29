@@ -225,6 +225,26 @@ describe('formulas', () => {
       1
     ]);
   });
+
+  test('match(get("scalerank"), [1, 2], 13, [3, 4], 11, 9)', () => {
+    const actual = formulaToExpression(
+      'match(get("scalerank"), [1, 2], 13, [3, 4], 11, 9)'
+    );
+    expect(actual).toEqual([
+      'match',
+      ['get', 'scalerank'],
+      [1, 2],
+      13,
+      [3, 4],
+      11,
+      9
+    ]);
+  });
+
+  test('["what", "is", "this", [1, 2]]', () => {
+    const actual = formulaToExpression('["what", "is", "this", [1, 2]]');
+    expect(actual).toEqual(['what', 'is', 'this', [1, 2]]);
+  });
 });
 
 describe('syntax errors', () => {

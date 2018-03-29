@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+- Fix handling of nested arrays that are *not* expressions (e.g. in `["match", ["get", "rank"], [1, 2], "a", [3, 4], "b", "c"]) by only treated arrays as expressions if they start with a whitelisted expression operator.
+
 ## 0.4.0
 
 - **[BREAKING]** Reject unquoted literal strings as passed in as formulas to `formulaToExpression`.

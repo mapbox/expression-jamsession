@@ -28,6 +28,10 @@ function astToExpression(input) {
   let expressionOperator;
   let expressionArguments = [];
 
+  if (input.type === 'ArrayExpression') {
+    return input.elements.map(astToExpression);
+  }
+
   if (input.type === 'UnaryExpression') {
     expressionOperator = input.operator;
     expressionArguments.push(astToExpression(input.argument));

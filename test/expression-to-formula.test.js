@@ -45,16 +45,16 @@ test('max(3, log2(6))', () => {
   expect(actual).toBe('max(3, log2(6))');
 });
 
-test(`"there are " & get("population") & " people " & upper("here " & "not there")`, () => {
+test(`"there are " & get("population") & " people " & upcase("here " & "not there")`, () => {
   const actual = expressionToFormula([
     'concat',
     'there are ',
     ['get', 'population'],
     ' people ',
-    ['upper', ['concat', 'here ', 'not there']]
+    ['upcase', ['concat', 'here ', 'not there']]
   ]);
   expect(actual).toBe(
-    `"there are " & get("population") & " people " & upper("here " & "not there")`
+    `"there are " & get("population") & " people " & upcase("here " & "not there")`
   );
 });
 
@@ -160,4 +160,22 @@ test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
     1
   ]);
   expect(actual).toEqual('case(get("foo") <= 4, 6, 2 == 2, 3, 1)');
+});
+
+test('match(get("scalerank"), [1, 2], 13, [3, 4], 11, 9)', () => {
+  const actual = expressionToFormula([
+    'match',
+    ['get', 'scalerank'],
+    [1, 2],
+    13,
+    [3, 4],
+    11,
+    9
+  ]);
+  expect(actual).toEqual('match(get("scalerank"), [1, 2], 13, [3, 4], 11, 9)');
+});
+
+test('["what", "is", "this", [1, 2]]', () => {
+  const actual = expressionToFormula(['what', 'is', 'this', [1, 2]]);
+  expect(actual).toEqual('["what", "is", "this", [1, 2]]');
 });
