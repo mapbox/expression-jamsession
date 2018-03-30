@@ -63,9 +63,13 @@ jamsession.formulaToExpression("3 + 4"); // ["+", 3, 4]
 jamsession.expressionToFormula(["+", 3, 4]); // "3 + 4"
 ```
 
+## Browser compatibility
+
+This library should work in IE11+. It uses a `Set`, so you might get it working in older browsers by adding a polyfill.
+
 ## Caveats
 
-- You can use this library to create expressions that are syntactically acceptable but invalid as Mapbox GL expressions, e.g. `notARealExpression(true)` outputs `["notARealExpression", true]`.
+- You can use this library to create expressions that are syntactically acceptable but invalid as Mapbox GL expressions, e.g. `get(true)` outputs `["get", true]`, which fails.
 - You cannot use JSON object literal arguments to [the `literal` expression](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-types-literal).
   This is allowed in the spec; but objects are not supported by jsep and the use case for this type of expression is kind of an edge case — so it's probably not worth trying to adjust the parser to support this edge case.
   If you disagree, please consider filing an issue and/or PR.

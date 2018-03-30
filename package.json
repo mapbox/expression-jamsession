@@ -12,7 +12,7 @@
     "pretest": "npm run lint",
     "precommit": "lint-staged",
     "format": "prettier --write '{,src/**/,test/**/}*.js'",
-    "build": "rm -rf dist && rollup -c",
+    "build": "scripts/build-operator-whitelist.js && rm -rf dist && rollup -c",
     "prepublishOnly": "npm run build"
   },
   "lint-staged": {
@@ -61,9 +61,11 @@
   },
   "homepage": "https://github.com/mapbox/expression-jamsession#readme",
   "devDependencies": {
+    "@mapbox/mapbox-gl-style-spec": "^11.1.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.14.0",
+    "eslint-plugin-node": "^6.0.1",
     "husky": "^0.14.3",
     "jest": "^22.0.4",
     "lint-staged": "^6.0.0",

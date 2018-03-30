@@ -212,6 +212,11 @@ describe('formulas', () => {
     expect(actual).toEqual(['==', ['!=', 3, 4], true]);
   });
 
+  test('!(get("x"))', () => {
+    const actual = formulaToExpression('!(get("x"))');
+    expect(actual).toEqual(['!', ['get', 'x']]);
+  });
+
   test('case(get("foo") <= 4, 6, 2 == 2, 3, 1)', () => {
     const actual = formulaToExpression(
       'case(get("foo") <= 4, 6, 2 == 2, 3, 1)'
@@ -224,6 +229,26 @@ describe('formulas', () => {
       3,
       1
     ]);
+  });
+
+  test('match(get("scalerank"), [1, 2], 13, [3, 4], 11, 9)', () => {
+    const actual = formulaToExpression(
+      'match(get("scalerank"), [1, 2], 13, [3, 4], 11, 9)'
+    );
+    expect(actual).toEqual([
+      'match',
+      ['get', 'scalerank'],
+      [1, 2],
+      13,
+      [3, 4],
+      11,
+      9
+    ]);
+  });
+
+  test('["what", "is", "this", [1, 2]]', () => {
+    const actual = formulaToExpression('["what", "is", "this", [1, 2]]');
+    expect(actual).toEqual(['what', 'is', 'this', [1, 2]]);
   });
 });
 
