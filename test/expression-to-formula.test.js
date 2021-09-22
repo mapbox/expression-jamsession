@@ -127,9 +127,16 @@ test('literal({ foo: 1, bar: 2 })', () => {
 
 test('literal({ "boolean": true, "string": "false" })', () => {
   const actual = expressionToFormula([
-    'literal', {'boolean': true, 'string': 'false'}
+    'literal', { boolean: true, string: 'false' }
   ]);
   expect(actual).toBe('literal({"boolean":true,"string":"false"})');
+});
+
+test('literal({ "nested": { "also-nested": "bees" } })', () => {
+  const actual = expressionToFormula([
+    'literal', { nested: { 'also-nested': 'bees' } }
+  ]);
+  expect(actual).toBe('literal({"nested":{"also-nested":"bees"}})');
 });
 
 test('literal("hsl(") & literal("235") & literal(", 75%, 50%)")', () => {
