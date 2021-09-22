@@ -121,14 +121,30 @@ test('coalesce(literal(["foo", ["bar", "baz"]]))', () => {
 });
 
 test('literal({ foo: 1, bar: 2 })', () => {
-  expect.hasAssertions();
-  try {
-    expressionToFormula(['literal', { foo: 1, bar: 2 }]);
-  } catch (error) {
-    expect(error.message).toBe(
-      'Only array arguments are supported for the literal expression'
-    );
-  }
+  const actual = expressionToFormula(['literal', { foo: 1, bar: 2 }]);
+  expect(actual).toBe('literal({"foo":1,"bar":2})');
+});
+
+test('literal({ "boolean": true, "string": "false" })', () => {
+  const actual = expressionToFormula([
+    'literal', {'boolean': true, 'string': 'false'}
+  ]);
+  expect(actual).toBe('literal({"boolean":true,"string":"false"})');
+});
+
+test('literal("hsl(") & literal("235") & literal(", 75%, 50%)")', () => {
+  const actual = expressionToFormula([
+    'concat',
+    ['literal', 'hsl('],
+    ['literal', '235'],
+    ['literal', ',75%,50%)']
+  ]);
+  expect(actual).toBe('literal("hsl(") & literal("235") & literal(",75%,50%)")');
+});
+
+test('literal("国立競技場")', () => {
+  const actual = expressionToFormula(["literal", "国立競技場"]);
+  expect(actual).toBe('literal("国立競技場")');
 });
 
 test('3 != 4', () => {
