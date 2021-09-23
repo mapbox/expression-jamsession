@@ -1,5 +1,9 @@
 # Changelog
 
+- Enable support for object literals.
+- Updates style spec version to `13.21.0` and removes block list predicated on object support.
+- Fix handling of the `literal` expression, which now supports any literal value (arrays, objects, strings, etc), in accordance with the style spec.
+
 ## 0.4.1
 
 - Fix handling of nested arrays that are *not* expressions (e.g. in `["match", ["get", "rank"], [1, 2], "a", [3, 4], "b", "c"]) by only treated arrays as expressions if they start with a whitelisted expression operator.
