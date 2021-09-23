@@ -12,7 +12,7 @@
     "pretest": "npm run lint",
     "precommit": "lint-staged",
     "format": "prettier --write '{,src/**/,test/**/}*.js'",
-    "build": "scripts/build-operator-whitelist.js && rm -rf dist && rollup -c",
+    "build": "scripts/build-operator-list.js && rm -rf dist && rollup -c",
     "prepublishOnly": "npm run build"
   },
   "lint-staged": {
