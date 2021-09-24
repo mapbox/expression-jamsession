@@ -1,5 +1,7 @@
 import expressionOperators from './expression-operators';
 
+const insertSpaceAfter = /("(?:[^\\"]|\\.)*")|[:,]/g;
+
 function stringifyLiteralArray(arr) {
   const items = arr.map(item => {
     if (Array.isArray(item)) return stringifyLiteralArray(item);
@@ -38,7 +40,12 @@ export default function expressionToFormula(expression) {
 
     const isArray = Array.isArray(arg);
     if (typeof arg === 'object' && !!arg && !isArray) {
-      return JSON.stringify(arg);
+      // Insert spaces after commas/colons for better inline display.
+      const pretty = JSON.stringify(arg).replace(
+        insertSpaceAfter,
+        (match, literal) => literal || match + ' '
+      );
+      return pretty;
     }
     if (!isArray) {
       return arg;

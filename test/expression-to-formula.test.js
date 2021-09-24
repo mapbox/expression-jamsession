@@ -120,23 +120,30 @@ test('coalesce(literal(["foo", ["bar", "baz"]]))', () => {
   expect(actual).toBe('coalesce(literal(["foo", ["bar", "baz"]]))');
 });
 
-test('literal({ foo: 1, bar: 2 })', () => {
+test('literal({foo: 1, bar: 2})', () => {
   const actual = expressionToFormula(['literal', { foo: 1, bar: 2 }]);
-  expect(actual).toBe('literal({"foo":1,"bar":2})');
+  expect(actual).toBe('literal({"foo": 1, "bar": 2})');
 });
 
-test('literal({ "boolean": true, "string": "false" })', () => {
+test('literal({"boolean": true, "string": "false"})', () => {
   const actual = expressionToFormula([
     'literal', { boolean: true, string: 'false' }
   ]);
-  expect(actual).toBe('literal({"boolean":true,"string":"false"})');
+  expect(actual).toBe('literal({"boolean": true, "string": "false"})');
 });
 
-test('literal({ "nested": { "also-nested": "bees" } })', () => {
+test('literal({"nested": {"also-nested": "bees"}})', () => {
   const actual = expressionToFormula([
     'literal', { nested: { 'also-nested': 'bees' } }
   ]);
-  expect(actual).toBe('literal({"nested":{"also-nested":"bees"}})');
+  expect(actual).toBe('literal({"nested": {"also-nested": "bees"}})');
+});
+
+test('literal({",quoted:,separators": ":,}{"})', () => {
+  const actual = expressionToFormula([
+    'literal', { ',quoted:,separators': ':,}{' }
+  ]);
+  expect(actual).toBe('literal({",quoted:,separators": ":,}{"})');
 });
 
 test('literal("hsl(") & literal("235") & literal(", 75%, 50%)")', () => {
