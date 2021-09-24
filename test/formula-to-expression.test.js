@@ -158,6 +158,21 @@ describe('formulas', () => {
     expect(actual).toEqual(['*', 3, ['length', ['get', 'len']]]);
   });
 
+  test('literal("hello")', () => {
+    const actual = formulaToExpression('literal("hello")');
+    expect(actual).toEqual(['literal', 'hello']);
+  });
+
+  test('literal(1000)', () => {
+    const actual = formulaToExpression('literal(1000)');
+    expect(actual).toEqual(['literal', 1000]);
+  });
+
+  test('literal(false)', () => {
+    const actual = formulaToExpression('literal(false)');
+    expect(actual).toEqual(['literal', false]);
+  });
+
   test('literal([1, 2])', () => {
     const actual = formulaToExpression('literal([1, 2])');
     expect(actual).toEqual(['literal', [1, 2]]);
@@ -180,17 +195,21 @@ describe('formulas', () => {
     expect(actual).toEqual(['coalesce', ['literal', ['foo', ['bar', 'baz']]]]);
   });
 
-  test('literal({ foo: 1, bar: 2 })', () => {
-    expect.hasAssertions();
-    try {
-      formulaToExpression('literal({ foo: 1, bar: 2 })');
-    } catch (error) {
-      expect(error.type).toBe('SyntaxError');
-      expect(error.index).toBe(8);
-      expect(error.description).toBe(
-        'Only array arguments are supported for the literal expression'
-      );
-    }
+  test('literal({ "foo": 1, "bar": 2 })', () => {
+    const actual = formulaToExpression('literal({ "foo": 1, "bar": 2 })');
+    expect(actual).toEqual(['literal', { foo: 1, bar: 2 }]);
+  });
+
+  test('literal("hsl(") & literal("235") & literal(",75%,50%)")', () => {
+    const actual = formulaToExpression(
+      'literal("hsl(") & literal("235") & literal(",75%,50%)")'
+    );
+    expect(actual).toEqual([
+      'concat',
+      ['literal', 'hsl('],
+      ['literal', '235'],
+      ['literal', ',75%,50%)']
+    ]);
   });
 
   test('3 != 4', () => {
@@ -244,6 +263,39 @@ describe('formulas', () => {
       11,
       9
     ]);
+  });
+
+  test('number-format(1.005, {"max-fraction-digits": 2, "min-fraction-digits": 2})', () => {
+    const actual = formulaToExpression(
+      'number-format(1.005, {"max-fraction-digits": 2, "min-fraction-digits": 2})'
+    );
+    expect(actual).toEqual([
+      'number-format',
+      1.005,
+      {
+        'max-fraction-digits': 2,
+        'min-fraction-digits': 2
+      }
+    ]);
+  });
+
+  test('[{"nested": get("population"), "nestedLiteral": literal([1, 2, 3])}]', () => {
+    const actual = formulaToExpression(
+      '[{"nested": get("population"), "nestedLiteral": literal([1, 2, 3])}]'
+    );
+    expect(actual).toEqual([{
+      nested: ['get', 'population'],
+      nestedLiteral: ['literal', [1, 2, 3]]
+    }]);
+  });
+
+  test('{"nested": {"also-nested": "bees"}}', () => {
+    const actual = formulaToExpression('{"nested": {"also-nested": "bees"}}');
+    expect(actual).toEqual({
+      nested: {
+        'also-nested': 'bees'
+      }
+    });
   });
 
   test('["what", "is", "this", [1, 2]]', () => {

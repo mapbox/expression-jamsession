@@ -1,17 +1,28 @@
 import jsep from 'jsep';
+import jsepObjectPlugin from '@jsep-plugin/object';
 import handleSyntaxErrors from './handle-syntax-errors';
 
 // GL expressions use ^ for exponentiation, while JS uses **.
 // 15 is precedence of ** operator in JS.
 jsep.addBinaryOp('^', 15);
 
+jsep.plugins.register(jsepObjectPlugin);
+
 function handleLiteralArgument(arg) {
   switch (arg.type) {
+    case 'Literal':
+      return arg.value;
     case 'ArrayExpression':
-      return arg.elements.map(item => {
-        if (item.type === 'Literal') return item.value;
-        return handleLiteralArgument(item);
+      return arg.elements.map(handleLiteralArgument);
+    case 'ObjectExpression': {
+      const object = {};
+      arg.properties.forEach(property => {
+        const k = handleLiteralArgument(property.key);
+        const v = handleLiteralArgument(property.value);
+        object[k] = v;
       });
+      return object;
+    }
     default:
       throw handleSyntaxErrors(new Error('Invalid syntax'));
   }
@@ -30,6 +41,17 @@ function astToExpression(input) {
 
   if (input.type === 'ArrayExpression') {
     return input.elements.map(astToExpression);
+  }
+
+  // Collect all properties into a single object
+  if (input.type === 'ObjectExpression') {
+    const object = {};
+    input.properties.forEach(property => {
+      const k = astToExpression(property.key);
+      const v = astToExpression(property.value);
+      object[k] = v;
+    });
+    return object;
   }
 
   if (input.type === 'UnaryExpression') {

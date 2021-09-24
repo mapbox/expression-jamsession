@@ -1,5 +1,7 @@
 import expressionOperators from './expression-operators';
 
+const insertSpaceAfter = /("(?:[^\\"]|\\.)*")|[:,]/g;
+
 function stringifyLiteralArray(arr) {
   const items = arr.map(item => {
     if (Array.isArray(item)) return stringifyLiteralArray(item);
@@ -26,19 +28,26 @@ export default function expressionToFormula(expression) {
 
   if (operator === 'literal') {
     const arg = expression[1];
-    if (!Array.isArray(arg)) {
-      throw new Error(
-        'Only array arguments are supported for the literal expression'
-      );
+    if (Array.isArray(arg)) {
+      return `${operator}(${stringifyLiteralArray(arg)})`;
     }
-    return `${operator}(${stringifyLiteralArray(arg)})`;
   }
 
   const args = expression.slice(1).map(arg => {
     if (typeof arg === 'string') {
       return `"${arg}"`;
     }
-    if (!Array.isArray(arg)) {
+
+    const isArray = Array.isArray(arg);
+    if (typeof arg === 'object' && !!arg && !isArray) {
+      // Insert spaces after commas/colons for better inline display.
+      const pretty = JSON.stringify(arg).replace(
+        insertSpaceAfter,
+        (match, literal) => literal || match + ' '
+      );
+      return pretty;
+    }
+    if (!isArray) {
       return arg;
     }
     const argOperator = arg[0];
