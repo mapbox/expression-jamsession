@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/expression-jamsession",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Write Mapbox GL expressions in a more familiar, handwritable, spreadsheet-like, programming-like syntax.",
   "main": "dist/index.js",
   "files": [
@@ -77,5 +77,8 @@
   "dependencies": {
     "@jsep-plugin/object": "^1.0.1",
     "jsep": "^1.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
