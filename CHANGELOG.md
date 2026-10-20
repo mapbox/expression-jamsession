@@ -1,5 +1,7 @@
 # Changelog
 
+Starting after 0.5.0, release notes are published as [GitHub Releases](https://github.com/mapbox/expression-jamsession/releases).
+
 ## 0.5.0
 
 - Enable support for object literals.

@@ -283,10 +283,12 @@ describe('formulas', () => {
     const actual = formulaToExpression(
       '[{"nested": get("population"), "nestedLiteral": literal([1, 2, 3])}]'
     );
-    expect(actual).toEqual([{
-      nested: ['get', 'population'],
-      nestedLiteral: ['literal', [1, 2, 3]]
-    }]);
+    expect(actual).toEqual([
+      {
+        nested: ['get', 'population'],
+        nestedLiteral: ['literal', [1, 2, 3]]
+      }
+    ]);
   });
 
   test('{"nested": {"also-nested": "bees"}}', () => {
