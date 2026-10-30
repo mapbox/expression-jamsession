@@ -1,7 +1,5 @@
 # @mapbox/expression-jamsession
 
-[![Build Status](https://travis-ci.com/mapbox/expression-jamsession.svg?token=SEyDg5xudiyx521kB7Cy&branch=master)](https://travis-ci.com/mapbox/expression-jamsession)
-
 Write [Mapbox GL expressions](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions) in a more familiar, handwritable, spreadsheet-like, programming-like syntax.
 This library translates these handwritten formulas into valid spec-compliant Mapbox GL expressions that you can use in a Mapbox style.
 
@@ -73,3 +71,20 @@ This library should work in IE11+. It uses a `Set`, so you might get it working 
 - You cannot use JSON object literal arguments to [the `literal` expression](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-types-literal).
   This is allowed in the spec; but objects are not supported by jsep and the use case for this type of expression is kind of an edge case — so it's probably not worth trying to adjust the parser to support this edge case.
   If you disagree, please consider filing an issue and/or PR.
+
+## Publishing
+
+Pull Requests merged to `main` with conventional commit prefixes are automatically published to npm by the `NPM release` GitHub Actions workflow, as new major/minor/patch versions (`feat!:`/`feat:`/`fix:` respectively). When using "Squash and merge", ensure your PR title includes the conventional commit prefix; a `BREAKING CHANGE:` footer only counts if it ends up in the squash commit's body. Other prefixes (`chore:`, `docs:`, etc.) or no prefix don't trigger a release.
+
+Examples:
+- `fix: resolved issue with nested arrays` -> patch
+- `feat: added support for a new operator` -> minor
+- `feat!: changed formula syntax for literals` (requires consumer changes) -> major
+
+The workflow publishes via [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) (OIDC), so no npm token is needed. This requires an npm org admin to configure a trusted publisher for `@mapbox/expression-jamsession` (GitHub Actions, workflow `npm-release.yml`, environment `npm-release`), and the `npm-release` GitHub Environment to exist in this repository. After publishing, the workflow creates a [GitHub Release](https://github.com/mapbox/expression-jamsession/releases) with generated notes and comments the released version on the merged PRs.
+
+`package.json`'s `version` may be incremented manually if needed (for example, to skip a minor version), but you shouldn't normally need to touch it; the published npm version, not `package.json`, is the source of truth for what gets released next.
+
+### Pre-release versions on other branches
+
+For testing in downstream projects, you can manually trigger the "NPM release" workflow on a branch to publish a pre-release tagged with the short commit sha (e.g. `0.5.0-aa79c6a`) under the npm `prerelease` dist-tag, without affecting `latest`. Check the workflow results for the published version.
