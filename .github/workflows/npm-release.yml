@@ -2,7 +2,7 @@ name: NPM release
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main"]
   workflow_dispatch: {}
 
 # Run releases one at a time, so two runs can't publish the same version or move `latest`
@@ -52,7 +52,6 @@ jobs:
         with:
           before-sha: ${{ github.event.before }}
           after-sha: ${{ github.event.after }}
-          default-branch: master
 
       # prepublishOnly builds dist/
       - name: Publish
