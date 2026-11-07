@@ -16,9 +16,9 @@ function isInfixOperator(operator) {
 }
 
 function infixPrecedence(operator) {
-  if (operator === '^') return 4;
-  if (operator === '*' || operator === '/' || operator === '%') return 3;
-  if (operator === '+' || operator === '-') return 2;
+  if (operator === '^') return 5;
+  if (operator === '*' || operator === '/' || operator === '%') return 4;
+  if (operator === '+' || operator === '-') return 3;
   if (
     operator === '<' ||
     operator === '>' ||
@@ -27,8 +27,10 @@ function infixPrecedence(operator) {
     operator === '==' ||
     operator === '!='
   ) {
-    return 1;
+    return 2;
   }
+  // & binds looser than a comparison, so concat stays the lowest non-zero.
+  if (operator === 'concat') return 1;
   return 0;
 }
 
@@ -73,19 +75,23 @@ export default function expressionToFormula(expression) {
     const childPrec = infixPrecedence(argOperator);
     // 8 / 4 / 2 is 1. The right operand of / and - needs parentheses.
     const isRightOperand = argIndex > 0 && argIndex === allArgs.length - 1;
+    const unaryMinus = operator === '-' && allArgs.length === 1;
     if (
       // Use parentheses to deal with operator precedence.
-      (/^[+-]$/.test(argOperator) && /^[*/%]$/.test(operator)) ||
       operator === '^' ||
-      (isRightOperand &&
-        parentPrec > 0 &&
-        childPrec > 0 &&
-        childPrec <= parentPrec)
+      (childPrec > 0 &&
+        (childPrec < parentPrec ||
+          (isRightOperand && childPrec === parentPrec) ||
+          unaryMinus))
     ) {
       return `(${argFormula})`;
     }
     return argFormula;
   });
+
+  if (operator === '-' && args.length === 1) {
+    return `-${args[0]}`;
+  }
 
   if (operator === '^') {
     return `${args.join(operator)}`;
