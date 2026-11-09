@@ -127,21 +127,24 @@ test('literal({foo: 1, bar: 2})', () => {
 
 test('literal({"boolean": true, "string": "false"})', () => {
   const actual = expressionToFormula([
-    'literal', { boolean: true, string: 'false' }
+    'literal',
+    { boolean: true, string: 'false' }
   ]);
   expect(actual).toBe('literal({"boolean": true, "string": "false"})');
 });
 
 test('literal({"nested": {"also-nested": "bees"}})', () => {
   const actual = expressionToFormula([
-    'literal', { nested: { 'also-nested': 'bees' } }
+    'literal',
+    { nested: { 'also-nested': 'bees' } }
   ]);
   expect(actual).toBe('literal({"nested": {"also-nested": "bees"}})');
 });
 
 test('literal({",quoted:,separators": ":,}{"})', () => {
   const actual = expressionToFormula([
-    'literal', { ',quoted:,separators': ':,}{' }
+    'literal',
+    { ',quoted:,separators': ':,}{' }
   ]);
   expect(actual).toBe('literal({",quoted:,separators": ":,}{"})');
 });
@@ -153,11 +156,13 @@ test('literal("hsl(") & literal("235") & literal(", 75%, 50%)")', () => {
     ['literal', '235'],
     ['literal', ',75%,50%)']
   ]);
-  expect(actual).toBe('literal("hsl(") & literal("235") & literal(",75%,50%)")');
+  expect(actual).toBe(
+    'literal("hsl(") & literal("235") & literal(",75%,50%)")'
+  );
 });
 
 test('literal("国立競技場")', () => {
-  const actual = expressionToFormula(["literal", "国立競技場"]);
+  const actual = expressionToFormula(['literal', '国立競技場']);
   expect(actual).toBe('literal("国立競技場")');
 });
 

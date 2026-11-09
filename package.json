@@ -10,17 +10,10 @@
     "test": "jest --maxWorkers=4",
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "precommit": "lint-staged",
     "format": "prettier --write '{,src/**/,test/**/}*.js'",
     "build": "scripts/build-operator-list.js && rm -rf dist && rollup -c",
-    "prepublishOnly": "npm run build"
-  },
-  "lint-staged": {
-    "**/*.js": [
-      "eslint",
-      "prettier --write",
-      "git add"
-    ]
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
   },
   "prettier": {
     "singleQuote": true
@@ -68,14 +61,23 @@
     "@rollup/plugin-node-resolve": "^13.0.4",
     "eslint": "^4.14.0",
     "eslint-plugin-node": "^6.0.1",
-    "husky": "^7.0.2",
+    "husky": "^9.1.7",
     "jest": "^27.2.1",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^15.5.2",
     "prettier": "^1.9.2",
     "rollup": "^2.56.3"
   },
   "dependencies": {
     "@jsep-plugin/object": "^1.0.1",
     "jsep": "^1.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint",
+      "prettier --write"
+    ]
   }
 }

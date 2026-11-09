@@ -1,7 +1,5 @@
 # @mapbox/expression-jamsession
 
-[![Build Status](https://travis-ci.com/mapbox/expression-jamsession.svg?token=SEyDg5xudiyx521kB7Cy&branch=master)](https://travis-ci.com/mapbox/expression-jamsession)
-
 Write [Mapbox GL expressions](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions) in a more familiar, handwritable, spreadsheet-like, programming-like syntax.
 This library translates these handwritten formulas into valid spec-compliant Mapbox GL expressions that you can use in a Mapbox style.
 
@@ -73,3 +71,13 @@ This library should work in IE11+. It uses a `Set`, so you might get it working 
 - You cannot use JSON object literal arguments to [the `literal` expression](https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-types-literal).
   This is allowed in the spec; but objects are not supported by jsep and the use case for this type of expression is kind of an edge case — so it's probably not worth trying to adjust the parser to support this edge case.
   If you disagree, please consider filing an issue and/or PR.
+
+## Publishing
+
+Pull Requests to `main` automatically publish a new version based on the PR's title prefix (`major:`, `minor:` or `patch:`) to the npmjs registry.
+
+The published version in the registry is the source of truth for the package version, but you can manually increment the `package.json`'s `version`.
+
+### Pre-release versions on other branches
+
+For testing in downstream projects, you can manually trigger the "NPM release" workflow on a branch to publish a pre-release tagged with the short commit sha (e.g. `0.5.0-aa79c6a`) under the npm `prerelease` dist-tag, without affecting `latest`. Check the workflow results for the published version.
