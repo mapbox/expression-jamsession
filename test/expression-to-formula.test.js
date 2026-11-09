@@ -219,3 +219,33 @@ test('["what", "is", "this", [1, 2]]', () => {
   const actual = expressionToFormula(['what', 'is', 'this', [1, 2]]);
   expect(actual).toEqual('["what", "is", "this", [1, 2]]');
 });
+
+test('8 / (4 / 2)', () => {
+  const actual = expressionToFormula(['/', 8, ['/', 4, 2]]);
+  expect(actual).toBe('8 / (4 / 2)');
+});
+
+test('(8 / 4) / 2', () => {
+  const actual = expressionToFormula(['/', ['/', 8, 4], 2]);
+  expect(actual).toBe('8 / 4 / 2');
+});
+
+test('1 - (2 - 3)', () => {
+  const actual = expressionToFormula(['-', 1, ['-', 2, 3]]);
+  expect(actual).toBe('1 - (2 - 3)');
+});
+
+test('("a" & "b") == "ab"', () => {
+  const actual = expressionToFormula(['==', ['concat', 'a', 'b'], 'ab']);
+  expect(actual).toBe('("a" & "b") == "ab"');
+});
+
+test('-get("x")', () => {
+  const actual = expressionToFormula(['-', ['get', 'x']]);
+  expect(actual).toBe('-get("x")');
+});
+
+test('-(1 + 2)', () => {
+  const actual = expressionToFormula(['-', ['+', 1, 2]]);
+  expect(actual).toBe('-(1 + 2)');
+});
